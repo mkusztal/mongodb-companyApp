@@ -19,7 +19,7 @@ router.get('/departments/random', (req, res) => {
 
   req.db
     .collection('departments')
-    .aggregate([{ $sample: { size: 3 } }])
+    .aggregate([{ $sample: { size: 1 } }])
     .toArray((err, data) => {
       if (err) res.status(500).json({ message: err });
       else res.json(data[0]);
