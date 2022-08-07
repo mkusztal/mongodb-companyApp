@@ -6,7 +6,6 @@ const employeesRoutes = require('./routes/employees.routes');
 const departmentsRoutes = require('./routes/departments.routes');
 const productsRoutes = require('./routes/products.routes');
 
-// server.js not only connects to the database, but also allows you to access it from the Express server via the db object
 mongoClient.connect(
   'mongodb://localhost:27017',
   { useNewUrlParser: true, useUnifiedTopology: true },
@@ -23,7 +22,6 @@ mongoClient.connect(
       app.use(express.json());
       app.use(express.urlencoded({ extended: false }));
 
-      // middleware
       app.use((req, res, next) => {
         req.db = db;
         next();

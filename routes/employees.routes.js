@@ -1,10 +1,8 @@
 const express = require('express');
 const router = express.Router();
-//const db = require('./../db');
 const ObjectId = require('mongodb').ObjectId;
 
 router.get('/employees', (req, res) => {
-  //res.json(db.employees);
   req.db
     .collection('employees')
     .find()
@@ -15,7 +13,6 @@ router.get('/employees', (req, res) => {
 });
 
 router.get('/employees/random', (req, res) => {
-  //res.json(db.employees[Math.floor(Math.random() * db.length)]);
   req.db
     .collection('employees')
     .aggregate([{ $sample: { size: 1 } }])
@@ -26,8 +23,6 @@ router.get('/employees/random', (req, res) => {
 });
 
 router.get('/employees/:id', (req, res) => {
-  //res.json(db.employees.find((item) => item.id == req.params.id));
-
   req.db
     .collection('employees')
     .findOne({ _id: ObjectId(req.params.id) }, (err, data) => {
@@ -39,9 +34,6 @@ router.get('/employees/:id', (req, res) => {
 
 router.post('/employees', (req, res) => {
   const { firstName, lastName } = req.body;
-  // db.employees.push({ id: 3, firstName, lastName });
-  // res.json({ message: 'OK' });
-
   req.db
     .collection('employees')
     .insertOne({ firstName: firstName }, { lastName: lastName }, (err) => {
@@ -52,11 +44,6 @@ router.post('/employees', (req, res) => {
 
 router.put('/employees/:id', (req, res) => {
   const { firstName, lastName } = req.body;
-  // db = db.employees.map((item) =>
-  //   item.id == req.params.id ? { ...item, firstName, lastName } : item
-  // );
-  // res.json({ message: 'OK' });
-
   req.db
     .collection('employees')
     .updateOne(
@@ -71,9 +58,6 @@ router.put('/employees/:id', (req, res) => {
 });
 
 router.delete('/employees/:id', (req, res) => {
-  // db = db.employees.filter((item) => item.id != req.params.id);
-  // res.json({ message: 'OK' });
-
   req.db
     .collection('employees')
     .deleteOne({ _id: ObjectId(req.params.id) }, (err) => {
