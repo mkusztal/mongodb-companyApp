@@ -36,7 +36,7 @@ router.post('/products', (req, res) => {
   const { name, client } = req.body;
   req.db
     .collection('products')
-    .insertMany({ name: name }, { client: client }, (err) => {
+    .insertOne({ name: name, client: client }, (err) => {
       if (err) res.status(500).json({ message: err });
       else res.json({ message: 'OK' });
     });
@@ -46,10 +46,9 @@ router.put('/products/:id', (req, res) => {
   const { name, client } = req.body;
   req.db
     .collection('products')
-    .updateMany(
+    .updateOne(
       { _id: ObjectId(req.params.id) },
-      { $set: { name: name } },
-      { $set: { client: client } },
+      { $set: { name: name, client: client } },
       (err) => {
         if (err) res.status(500).json({ message: err });
         else res.json({ message: 'OK' });
